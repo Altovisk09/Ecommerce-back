@@ -1,24 +1,26 @@
 const express = require('express');
-const logger = require('morgar');
+const logger = require('morgan');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const {testConnection} = require('./src/config/database');
 
 var app = express();
 
 dotenv.config();
-// conectar db
+
+testConnection();
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(logger('combined'));
 app.use(cookieParser());
-// app.use(cors(corsConfig))
+app.use(cors())
 
 // rotas
-app.use('/',{
-
-})
+app.use('/', (res, req)=>{
+    res.send('Deu certo')
+});
 
 function normalizePort(val) {
     const port = parseInt(val, 10);
